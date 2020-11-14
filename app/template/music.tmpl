@@ -1,0 +1,31 @@
+{{ define "content" }}
+
+<!DOCTYPE html>
+
+<html>
+
+    <style>
+    #chat {
+        text-align: left;
+        background: #f1f1f1;
+        width: 500px;
+        min-height: 300px;
+        padding: 20px;
+    }
+    </style>
+
+    <body>
+        <center>
+            <h3>Chat</h3>
+            <pre id="chat"></pre>
+            <input placeholder="say something" id="text" type="text">
+
+            <input type="button" value="Exec" onclick="OnButtonClick();"/>
+        </center>
+
+        <script type="text/javascript" src="js/melody1.js"></script>
+    </body>
+
+</html>
+
+{{ end }}

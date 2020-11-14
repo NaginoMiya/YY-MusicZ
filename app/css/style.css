@@ -1,0 +1,133 @@
+h1 { font-size: 28px; font-weight: bold; }
+h2 { font-size: 26px; font-weight: bold; }
+h3 { font-size: 22px; font-weight: bold; }
+
+dl dd {
+	margin-left: 0.5em;
+	margin-bottom: 6px;
+	padding-left: 0.5em;
+	border-left: 1px solid #ddd;
+}
+
+.header {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.header .nav {
+	margin-bottom: 10px;
+}
+.header h1 {
+	padding-top: 6px;
+	padding-bottom: 8px;
+	font-weight: normal;
+}
+.header h1 a {
+	color: #999;
+}
+
+.jumbotron {
+	margin-top: 10px;
+}
+
+.footer {
+	margin-top: 20px;
+	padding-top: 10px;
+	border-top: 1px solid #e5e5e5;
+}
+
+#sidebar {
+	margin-top: 10px;
+}
+
+#gmap {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.bs-docs-nav {
+	border: 0 none;
+	background-color: #FAFAFA;
+}
+
+.navbar-collapse {
+	border: 0 none;
+}
+
+.panel-default > .panel-heading {
+	border-color: transparent;
+}
+
+.navbar-brand {
+	font-size: 22px;
+}
+
+.problem-background {
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.problem-container {
+    border-top: 2px solid #ddd;
+	font-size: 18px;
+}
+
+#prob-h1 {
+    padding-bottom: 10px;
+}
+
+@media (min-width: 767px) {
+	.nav-pills {
+		margin-top: 4px;
+	}
+}
+
+@media (max-width: 767px) {
+	.nav-pills {
+		position: static;
+		float: none;
+		width: auto;
+		margin-top: 0;
+		background-color: transparent;
+		border: 0;
+		box-shadow: none;
+	}
+	.navbar-brand {
+		font-size: 18px;
+	}
+	.navbar-collapse {
+		padding: 0;
+	}
+	.nav-pills li {
+		float: none;
+	}
+	.nav-pills > li > a {
+		border-radius: 0;
+	}
+	.nav-pills > li + li {
+		margin: 0;
+	}
+	.nav-pills > li.active > a {
+		background-color: #226BAA;
+	}
+}
+
+#Login_button {
+	float: right;
+}
+
+#Valid {
+
+}
+
+#InValid {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+}
+
+
+#SubmitButton {
+	background-color: #f7f7f7;
+	height: 60px;
+	margin-bottom: 200px;
+}
