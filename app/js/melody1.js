@@ -61,7 +61,6 @@ ws.onmessage = function (msg) {
     queue.push(msg.data)
 };
 
-
 function OnButtonClick() {
     ws.send(text.value);
     text.value = "";
