@@ -1,4 +1,4 @@
-h1 { font-size: 28px; font-weight: bold; }
+h1 { font-size: 40px; font-weight: bold; }
 h2 { font-size: 26px; font-weight: bold; }
 h3 { font-size: 22px; font-weight: bold; }
 
@@ -17,10 +17,11 @@ a:hover {
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  color: #333;
+  color: #fff;
   text-shadow: none; /* Prevent inheritance from `body` */
-  background-color: #fff;
-  border: .05rem solid #fff;
+  background-color: rgba(15, 15, 15, .8);
+  border: .05rem solid #333;
+  font-size: 20px;
 }
 
 
@@ -43,13 +44,14 @@ body {
 }
 
 .cover-container {
-  max-width: 42em;
+  max-width: 100%;
 }
 
 
 /*
  * Header
  */
+
 .masthead {
   margin-bottom: 2rem;
 }
@@ -58,12 +60,25 @@ body {
   margin-bottom: 0;
 }
 
+.masthead-sub {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: 20px;
+  padding-top: 19px;
+  color: #999;
+}
+
 .nav-masthead .nav-link {
   padding: .25rem 0;
   font-weight: 700;
   color: rgba(255, 255, 255, .5);
   background-color: transparent;
   border-bottom: .25rem solid transparent;
+}
+
+/* 効いてるか確認する */
+.nav-link a:hover{
+  color: rgb(0, 0, 0);
 }
 
 .nav-masthead .nav-link:hover,
@@ -89,6 +104,13 @@ body {
   }
 }
 
+.nav-link{
+  font-size: 25px;
+}
+
+.nav-color-red{
+  color: rgb(240, 96, 96);
+}
 
 /*
  * Cover
@@ -109,79 +131,6 @@ body {
   color: rgba(255, 255, 255, .5);
 }
 
-
-dl dd {
-	margin-left: 0.5em;
-	margin-bottom: 6px;
-	padding-left: 0.5em;
-	border-left: 1px solid #ddd;
-}
-
-.header {
-	margin-bottom: 10px;
-	border-bottom: 1px solid #e5e5e5;
-}
-.header .nav {
-	margin-bottom: 10px;
-}
-.header h1 {
-	padding-top: 6px;
-	padding-bottom: 8px;
-	font-weight: normal;
-}
-.header h1 a {
-	color: #999;
-}
-
-.jumbotron {
-	margin-top: 10px;
-}
-
-.footer {
-	margin-top: 20px;
-	padding-top: 10px;
-	border-top: 1px solid #e5e5e5;
-}
-
-#sidebar {
-	margin-top: 10px;
-}
-
-#gmap {
-	margin-top: 5px;
-	margin-bottom: 10px;
-}
-
-.bs-docs-nav {
-	border: 0 none;
-	background-color: #FAFAFA;
-}
-
-.navbar-collapse {
-	border: 0 none;
-}
-
-.panel-default > .panel-heading {
-	border-color: transparent;
-}
-
-.navbar-brand {
-	font-size: 22px;
-}
-
-.problem-background {
-    margin-top: 30px;
-    font-size: 20px;
-}
-
-.problem-container {
-    border-top: 2px solid #ddd;
-	font-size: 18px;
-}
-
-#prob-h1 {
-    padding-bottom: 10px;
-}
 
 @media (min-width: 767px) {
 	.nav-pills {
@@ -219,28 +168,34 @@ dl dd {
 	}
 }
 
-#Login_button {
-	float: right;
+/* flex box */
+.genre-box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-#Valid {
-
+.card {
+  background: #DCDDDD;
+  font-size: 20px;
+  text-align: center;
 }
 
-#InValid {
-    pointer-events: none;
-    cursor: default;
-    text-decoration: none;
-}
-
-
-#SubmitButton {
-	background-color: #f7f7f7;
-	height: 60px;
-	margin-bottom: 200px;
+.card-link {
+  color: #333;
 }
 
 
+.card-title {
+  color: rgb(255, 96, 96);
+  font-size: 60px;
+}
+
+.card-a a{
+  border-style: none;
+}
+
+/* Gradation Botan */
 
 *,
 *::before,

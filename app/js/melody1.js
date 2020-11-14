@@ -15,7 +15,6 @@ ws.onmessage = function (msg) {
     chat.innerText += line;
 };
 
-
 function OnButtonClick() {
     ws.send("<" + name + "> " + text.value);
     text.value = "";
