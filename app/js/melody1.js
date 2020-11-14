@@ -1,22 +1,68 @@
 var url = "ws://" + window.location.host + "/ws";
 var ws = new WebSocket(url);
-var name = "Guest" + Math.floor(Math.random() * 1000);
 
 var chat = document.getElementById("chat");
 var text = document.getElementById("text");
 
-var now = function () {
-    var iso = new Date().toISOString();
-    return iso.split("T")[1].split(".")[0];
-};
+var queue = []
+
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player("player", {
+        height: "360",
+        width: "640",
+        videoId: "Hy8kmNEo1i8",
+        events: {
+            "onReady": onPlayerReady,
+            "onStateChange": onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    event.target.playVideo();
+}
+
+var done = false;
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+        console.log("Video Ended")
+        console.log(queue[0])
+
+        var url = queue.shift()
+
+        //to do: videoIdがfalse -> 再生しないように後で実装する
+        videoId = url.split('v=')[1];
+        if (videoId) {
+            // &=クエリパラーメターがついていることがあるので取り除く
+            const ampersandPosition = videoId.indexOf('&');
+            if(ampersandPosition != -1) {
+                videoId = videoId.substring(0, ampersandPosition);
+            }
+        }
+        player.loadVideoById(videoId)
+    }
+}
+
+function stopVideo(){
+    player.stopVideo();
+}
 
 ws.onmessage = function (msg) {
-    var line =  now() + " " + msg.data + "\n";
-    chat.innerText += line;
+    var line = msg.data;
+    chat.innerText += (line + "\n");
+
+    queue.push(msg.data)
 };
 
 
 function OnButtonClick() {
-    ws.send("<" + name + "> " + text.value);
+    ws.send(text.value);
     text.value = "";
 };
