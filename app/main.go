@@ -11,15 +11,15 @@ import (
 
 func main(){
 	router := gin.Default()
-	router.Use(static.Serve("/css", static.LocalFile("app/css", true)))
-	router.Use(static.Serve("/js", static.LocalFile("app/js", true)))
-	layout := "app/template/layout.tmpl"
+	router.Use(static.Serve("/css", static.LocalFile("css", true)))
+	router.Use(static.Serve("/js", static.LocalFile("js", true)))
+	layout := "template/layout.tmpl"
 
 	m := melody.New()
 
 	router.GET("/", func(c *gin.Context) {
 
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "app/template/index.tmpl")))
+		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/index.tmpl")))
 
 		//こいつは消しても大丈夫です
 		b_messege := "stringだよ"
@@ -34,7 +34,7 @@ func main(){
 	//チャット部分
 	router.GET("/music", func(c *gin.Context) {
 
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "app/template/music.tmpl")))
+		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music.tmpl")))
 
 		c.HTML(http.StatusOK, "base", gin.H{
 		})
