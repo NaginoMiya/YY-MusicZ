@@ -131,3 +131,68 @@ dl dd {
 	height: 60px;
 	margin-bottom: 200px;
 }
+
+
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+input.btn-border-gradient {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  border-radius: 0.5rem;
+  color: #8fc31f;
+  background: #000;
+}
+
+
+.btn-border-gradient-wrap {
+  display: inline-block;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(yellow),
+    to(green)
+  );
+  background: -webkit-linear-gradient(left, yellow, green);
+  background: linear-gradient(to right, yellow, green);
+}
+
+.btn-border-gradient-wrap:hover {
+  background: -webkit-gradient(
+    linear,
+    right top,
+    left top,
+    from(yellow),
+    to(green)
+  );
+  background: -webkit-linear-gradient(right, yellow, green);
+  background: linear-gradient(to left, yellow, green);
+}
+
+a.btn-border-gradient {
+  
+}
+
