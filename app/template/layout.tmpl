@@ -11,29 +11,26 @@
     </head>
 
     <body>
-
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/"><span class="text-danger">YY</span>Music<span class="text-danger">Z</span></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="/music">JPOP</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/music">ROCK</a>
-                    </li>
-                  </ul>
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+                <div class="inner">
+                  <h3 class="masthead-brand"><span class="text-danger">YY</span>Music <span class="text-danger">Z</span></h3>
+                  <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Contact</a>
+                  </nav>
                 </div>
-            </nav>
-        </header>
+            </header>
 
-    {{ template "content" . }}
-    
+        {{ template "content" . }}
+
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+                </div>
+            </footer>
+        </div>
+
     </body>
     
 </html>
