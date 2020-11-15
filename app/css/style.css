@@ -168,6 +168,22 @@ body {
 	}
 }
 
+/* musicPage container */
+.music-page-container {
+  display: block;
+  margin: auto;
+}
+
+.music-page-container > * {
+  text-align: center;
+}
+
+
+.form-group {
+  display: inline-block;
+  width: 70%;
+}
+
 /* flex box */
 .genre-box{
     display: flex;
@@ -193,6 +209,36 @@ body {
 
 .card-a a{
   border-style: none;
+}
+
+/* Lists container */
+.list-container {
+  display: flex;
+  margin: 4px 0;
+}
+
+.flex-item {
+  color: #fff;
+}
+
+.list-url{
+
+}
+
+.btn-del {
+  width: 90%;
+}
+
+.btn-danger{
+  background-color: crimson;
+  color: white;
+}
+
+#wrapper {
+  height: 220px;
+  width: 100%;
+  overflow-y: scroll;
+  margin: auto;
 }
 
 /* Gradation Botan */
@@ -224,33 +270,21 @@ input.btn-border-gradient {
   letter-spacing: 0.1em;
   border-radius: 0.5rem;
   color: #8fc31f;
-  background: #000;
+  background: #111;
 }
 
 
 .btn-border-gradient-wrap {
   display: inline-block;
+  margin-top: 20px;
+  margin-left: 30px;
   padding: 0.2rem;
   border-radius: 0.5rem;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(yellow),
-    to(green)
-  );
-  background: -webkit-linear-gradient(left, yellow, green);
-  background: linear-gradient(to right, yellow, green);
+  background: -webkit-linear-gradient(left, deeppink, red);
+  background: linear-gradient(to right, deeppink, red);
 }
 
 .btn-border-gradient-wrap:hover {
-  background: -webkit-gradient(
-    linear,
-    right top,
-    left top,
-    from(yellow),
-    to(green)
-  );
-  background: -webkit-linear-gradient(right, yellow, green);
-  background: linear-gradient(to left, yellow, green);
+  background: -webkit-linear-gradient(right, deeppink, red);
+  background: linear-gradient(to left, deeppink, red);
 }
