@@ -211,6 +211,10 @@ body {
   border-style: none;
 }
 
+.alert{
+  text-shadow: none;
+}
+
 /* Lists container */
 .list-container {
   display: flex;
