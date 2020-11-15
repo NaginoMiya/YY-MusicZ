@@ -29,25 +29,23 @@
             <div id = "player"></div>
             <h3>URLを追加しよう！ 削除もできるよ！</h3>
             <div id="wrapper">
-                <div id = "list">
-                    <div class="flex-container">
-                        <div class="flex-item">URL1</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class="flex-container">
-                        <div class="flex-item">URL2</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class="flex-container">
-                        <div class="flex-item">URL3</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class='flex-container'>
-                        <div class="flex-item">URL4</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
+                <div id="url1" class="flex-container">
+                    <div class="flex-item">URL1</div>
+                    <div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div>
                 </div>
-            </div>
+                <div id="url2" class="flex-container">
+                    <div class="flex-item">URL2</div>
+                    <div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div>
+                </div>
+                <div id="url3" class="flex-container">
+                    <div class="flex-item">URL3</div>
+                    <div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div>
+                </div>
+                <div id="url4" class='flex-container'>
+                    <div class="flex-item">URL4</div>
+                    <div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div>
+                </div>
+        </div>
 
             <input placeholder="Input Your Favorite Music!!!!!!!" id="text" type="text" class="form-control">
             
@@ -57,17 +55,6 @@
             
             <script type="text/javascript" src="js/melody1.js"></script>
         </center>
-
-        <script>
-            var cnt = 0
-
-            function OnButtonClick() {
-                cnt = cnt + 1;
-                var url = "URL" + cnt;
-                var add = '<div class="flex-container"><div class="flex-item">' + url + '</div><div class="flex-item"><input type="button" value="del"/></div></div>';
-                $('#wrapper').append(add).trigger('create');
-            };
-        </script>
         
     </body>
 
