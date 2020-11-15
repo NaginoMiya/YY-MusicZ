@@ -62,7 +62,7 @@ ws.onmessage = function (msg) {
 
     var video_name = "VideoName" + cnt;
     var n = "url" + cnt;
-    var add = '<div' + ' id=' + '"' + n + '"' + ' class="flex-container"><div class="flex-item">' + video_name + '</div><div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div></div>';
+    var add = '<div class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×"/></div></div>';
     $('#wrapper').append(add).trigger('create');
 };
 
