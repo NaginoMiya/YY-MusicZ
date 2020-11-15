@@ -166,10 +166,6 @@ func main() {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/game", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
 	router.GET("/vocaloid", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
