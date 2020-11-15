@@ -4,76 +4,50 @@
 
 <html>
 
-    <style>
+<style>
 
-        /* 親要素(コンテナ) */
-        .flex-container {
-            display: flex;
-        }
-        /* 子要素(アイテム) */
-        .flex-item {
-            color: #fff;
-        }
 
-        #wrapper {
-            height: 100px;
-            width: 300px;
-            overflow-y: scroll;
-            margin: auto;
-        }
 
-    </style>
+</style>
 
-    <body>
-        <!-- ToDo: centerタグの廃止 -->
-            
-        <div class="music-page-container px-3">
-            <div id = "player"></div>
-            <h3>URLを追加しよう！ 削除もできるよ！</h3>
-            <div id="wrapper">
-                <div id = "list">
-                    <div class="flex-container">
-                        <div class="flex-item">URL1</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class="flex-container">
-                        <div class="flex-item">URL2</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class="flex-container">
-                        <div class="flex-item">URL3</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
-                    <div class='flex-container'>
-                        <div class="flex-item">URL4</div>
-                        <div class="flex-item"><input type="button" value="del"/></div>
-                    </div>
+<body>
+
+    <div class="music-page-container px-3">
+        <div id="player"></div>
+        <h3>URLを追加しよう！ 削除もできるよ！</h3>
+        <div id="wrapper">
+            <div id="list">
+                <div class="list-container">
+                    <div class="flex-item list-url col-8">URL1</div>
+                    <div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" /></div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <input placeholder="Input Your Favorite Music!!!!!!!" id="text" type="text" class="form-control form-control">
-            </div>
-            
-            <div class="btn-border-gradient-wrap">
-                <input type="button" class="btn btn-border-gradient" value="SEND!" onclick="OnButtonClick();"/>
-            </div>
         </div>
-        
-        <script type="text/javascript" src="js/melody1.js"></script>
 
-        <script>
-            var cnt = 0
+        <div class="form-group">
+            <input placeholder="Input Your Favorite Music!!!!!!!" id="text" type="text"
+                class="form-control form-control">
+        </div>
 
-            function OnButtonClick() {
-                cnt = cnt + 1;
-                var url = "URL" + cnt;
-                var add = '<div class="flex-container"><div class="flex-item">' + url + '</div><div class="flex-item"><input type="button" value="del"/></div></div>';
-                $('#wrapper').append(add).trigger('create');
-            };
-        </script>
-        
-    </body>
+        <div class="btn-border-gradient-wrap">
+            <input type="button" class="btn btn-border-gradient" value="SEND!" onclick="OnButtonClick();" />
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/melody1.js"></script>
+
+    <script>
+        var cnt = 0
+
+        function OnButtonClick() {
+            cnt = cnt + 1;
+            var url = "URL" + cnt;
+            var add = '<div class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×"/></div></div>';
+            $('#wrapper').append(add).trigger('create');
+        };
+    </script>
+
+</body>
 
 </html>
 
