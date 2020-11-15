@@ -4,7 +4,8 @@ var ws = new WebSocket(url);
 var chat = document.getElementById("chat");
 var text = document.getElementById("text");
 
-var queue = []
+var queue = [];
+var check = [];
 
 var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
@@ -35,10 +36,19 @@ function onPlayerStateChange(event) {
         console.log("Video Ended")
         console.log(queue[0])
 
-        var url = queue.shift()
-
         //to do: videoIdがfalse -> 再生しないように後で実装する
+        
+        while(check[0] == -1 && check.length > 0){
+            queue.shift();
+            check.shift();
+        }
+        console.log('END:que=', queue[0]);
+        console.log('END:check=',check[0]);
+
+        var url = queue.shift();
+        check.shift();
         videoId = url.split('v=')[1];
+
         if (videoId) {
             // &=クエリパラーメターがついていることがあるので取り除く
             const ampersandPosition = videoId.indexOf('&');
@@ -55,26 +65,39 @@ function stopVideo(){
 }
 
 
-var cnt = 4
+var cnt = 0
 ws.onmessage = function (msg) {
     var url = msg.data;
-    queue.push(url)
-
+    cnt++;
+    queue.push(url);
+    check.push(cnt);
     var video_name = "VideoName" + cnt;
     var n = "url" + cnt;
-    var add = '<div class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×"/></div></div>';
+    var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
     $('#wrapper').append(add).trigger('create');
 };
 
 function SendButtonClick() {
-    ws.send(text.value);
-    console.log(text.value);
-    text.value = "";
+    var url = text.value;
+    videoId = url.split('v=')[1];
+    if (videoId) {
+        ws.send(url);
+        text.value = "";
+    }
+    else {
+        alert("invelid");
+    }
 };
 
 function remove(obj) {
     var id_name = ($(obj).parent()).parent().attr('id');
+    var N = parseInt(id_name.slice(3));
     id_name = '#' + id_name;
     console.log(id_name)
+    console.log(N);
     $(id_name).remove();
+
+    var idx = N - parseInt(check[0]);
+    check[idx] = -1;
+    console.log('idx=', idx);
 }
