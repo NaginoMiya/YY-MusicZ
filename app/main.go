@@ -142,39 +142,39 @@ func main() {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/jpop", func(c *gin.Context) {
+	router.GET("/wsjpop", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/rock", func(c *gin.Context) {
+	router.GET("/wsrock", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/edm", func(c *gin.Context) {
+	router.GET("/wsedm", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/hiphop", func(c *gin.Context) {
+	router.GET("/wshiphop", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/classic", func(c *gin.Context) {
+	router.GET("/wsclassic", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/game", func(c *gin.Context) {
+	router.GET("/wsgame", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/vocaloid", func(c *gin.Context) {
+	router.GET("/wsvocaloid", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/anime", func(c *gin.Context) {
+	router.GET("/wsanime", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/all", func(c *gin.Context) {
+	router.GET("/wsall", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
