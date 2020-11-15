@@ -7,6 +7,8 @@ var text = document.getElementById("text");
 var queue = [];
 var check = [];
 
+var videoTitle;
+
 var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 
@@ -70,20 +72,28 @@ function stopVideo(){
 var cnt = 0
 ws.onmessage = function (msg) {
     var url = msg.data;
+    console.log(videoTitle);
+    console.log(test("kstm"));
     cnt++;
     queue.push(url);
     check.push(cnt);
-    var video_name = "VideoName" + cnt;
     var n = "url" + cnt;
-    var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
-    $('#wrapper').append(add).trigger('create');
+    setTimeout(()=>{
+        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + videoTitle + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+        $('#wrapper').append(add).trigger('create');
+      }, 200);    
 };
 
 function SendButtonClick() {
     var url = text.value;
+    console.log(getTitle(url));
     videoId = url.split('v=')[1];
     if (videoId) {
         ws.send(url);
+
+        text.value = "";
+        getTitle(url);
+
     }
     else {
         swal({
@@ -107,4 +117,25 @@ function remove(obj) {
     var idx = N - parseInt(check[0]);
     check[idx] = -1;
     console.log('idx=', idx);
+
+}
+
+function getTitle(v_url) {
+    //var videoId = "Hy8kmNEo1i8";
+    var videoUrl = v_url;
+    console.log(v_url);
+    var oembedUrl = 'https://noembed.com/embed?url=' + videoUrl;
+    jQuery.ajax({
+      url: oembedUrl,
+      type: 'GET',
+      dataType: 'json',
+      success: function(resp){
+        console.log('info : ', resp);
+        videoTitle = resp['title'];
+        console.log(videoTitle);
+      },
+      error: function(data) {
+        console.error('NOOOOO');
+      }
+    });
 }
