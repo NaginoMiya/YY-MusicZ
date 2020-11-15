@@ -1,5 +1,5 @@
-var url = "ws://" + window.location.host + "/ws";
-var ws = new WebSocket(url);
+var wsurl = "ws://" + window.location.host + "/wsall";
+var ws = new WebSocket(wsurl);
 
 var chat = document.getElementById("chat");
 var text = document.getElementById("text");
