@@ -168,6 +168,20 @@ body {
 	}
 }
 
+/* musicPage container */
+.music-page-container {
+  display: block;
+  margin: auto;
+  padding-top: 50px;
+}
+
+
+
+.form-group {
+  display: inline;
+  margin: auto;
+}
+
 /* flex box */
 .genre-box{
     display: flex;

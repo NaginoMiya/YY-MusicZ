@@ -19,13 +19,15 @@
             height: 100px;
             width: 300px;
             overflow-y: scroll;
+            margin: auto;
         }
 
     </style>
 
     <body>
         <!-- ToDo: centerタグの廃止 -->
-        <center>
+            
+        <div class="music-page-container px-3">
             <div id = "player"></div>
             <h3>URLを追加しよう！ 削除もできるよ！</h3>
             <div id="wrapper">
@@ -49,14 +51,16 @@
                 </div>
             </div>
 
-            <input placeholder="Input Your Favorite Music!!!!!!!" id="text" type="text" class="form-control">
+            <div class="form-group">
+                <input placeholder="Input Your Favorite Music!!!!!!!" id="text" type="text" class="form-control form-control">
+            </div>
             
             <div class="btn-border-gradient-wrap">
                 <input type="button" class="btn btn-border-gradient" value="SEND!" onclick="OnButtonClick();"/>
             </div>
-            
-            <script type="text/javascript" src="js/melody1.js"></script>
-        </center>
+        </div>
+        
+        <script type="text/javascript" src="js/melody1.js"></script>
 
         <script>
             var cnt = 0
