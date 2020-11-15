@@ -56,12 +56,11 @@ function stopVideo(){
 
 ws.onmessage = function (msg) {
     var line = msg.data;
-    chat.innerText += (line + "\n");
-
     queue.push(msg.data)
 };
 
-function OnButtonClick() {
+function SendButtonClick() {
     ws.send(text.value);
+    console.log(text.value);
     text.value = "";
 };
