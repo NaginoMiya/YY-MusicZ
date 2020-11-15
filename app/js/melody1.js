@@ -35,8 +35,6 @@ function onPlayerReady(event) {
 var done = false;
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
-        console.log("Video Ended")
-        console.log(queue[0])
 
         //to do: videoIdがfalse -> 再生しないように後で実装する
         
@@ -44,8 +42,6 @@ function onPlayerStateChange(event) {
             queue.shift();
             check.shift();
         }
-        console.log('END:que=', queue[0]);
-        console.log('END:check=',check[0]);
         
         var id_tmp = '#url' + check[0];
         $(id_tmp).remove();
@@ -72,8 +68,6 @@ function stopVideo(){
 var cnt = 0
 ws.onmessage = function (msg) {
     var url = msg.data;
-    console.log(videoTitle);
-    console.log(test("kstm"));
     cnt++;
     queue.push(url);
     check.push(cnt);
@@ -86,7 +80,6 @@ ws.onmessage = function (msg) {
 
 function SendButtonClick() {
     var url = text.value;
-    console.log(getTitle(url));
     videoId = url.split('v=')[1];
     if (videoId) {
         ws.send(url);
@@ -110,29 +103,23 @@ function remove(obj) {
     var id_name = ($(obj).parent()).parent().attr('id');
     var N = parseInt(id_name.slice(3));
     id_name = '#' + id_name;
-    console.log(id_name)
-    console.log(N);
     $(id_name).remove();
 
     var idx = N - parseInt(check[0]);
     check[idx] = -1;
-    console.log('idx=', idx);
 
 }
 
 function getTitle(v_url) {
     //var videoId = "Hy8kmNEo1i8";
     var videoUrl = v_url;
-    console.log(v_url);
     var oembedUrl = 'https://noembed.com/embed?url=' + videoUrl;
     jQuery.ajax({
       url: oembedUrl,
       type: 'GET',
       dataType: 'json',
       success: function(resp){
-        console.log('info : ', resp);
         videoTitle = resp['title'];
-        console.log(videoTitle);
       },
       error: function(data) {
         console.error('NOOOOO');
