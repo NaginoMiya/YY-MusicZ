@@ -54,9 +54,16 @@ function stopVideo(){
     player.stopVideo();
 }
 
+
+var cnt = 4
 ws.onmessage = function (msg) {
-    var line = msg.data;
-    queue.push(msg.data)
+    var url = msg.data;
+    queue.push(url)
+
+    var video_name = "VideoName" + cnt;
+    var n = "url" + cnt;
+    var add = '<div' + ' id=' + '"' + n + '"' + ' class="flex-container"><div class="flex-item">' + video_name + '</div><div class="flex-item"><input type="button" value="del" onclick="remove(this);"/></div></div>';
+    $('#wrapper').append(add).trigger('create');
 };
 
 function SendButtonClick() {
@@ -64,3 +71,10 @@ function SendButtonClick() {
     console.log(text.value);
     text.value = "";
 };
+
+function remove(obj) {
+    var id_name = ($(obj).parent()).parent().attr('id');
+    id_name = '#' + id_name;
+    console.log(id_name)
+    $(id_name).remove();
+}
