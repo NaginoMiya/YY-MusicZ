@@ -46,7 +46,9 @@ function onPlayerStateChange(event) {
         }
         console.log('END:que=', queue[0]);
         console.log('END:check=',check[0]);
-
+        
+        var id_tmp = '#url' + check[0];
+        $(id_tmp).remove();
         var url = queue.shift();
         check.shift();
         videoId = url.split('v=')[1];
@@ -88,12 +90,20 @@ function SendButtonClick() {
     videoId = url.split('v=')[1];
     if (videoId) {
         ws.send(url);
+
         text.value = "";
         getTitle(url);
+
     }
     else {
-        alert("invelid");
+        swal({
+            title: "Wrong URL!!",
+            text: "Please try again.",
+            icon: "error",
+            dangerMode: true,
+        })
     }
+    text.value = "";
 };
 
 function remove(obj) {
@@ -107,6 +117,7 @@ function remove(obj) {
     var idx = N - parseInt(check[0]);
     check[idx] = -1;
     console.log('idx=', idx);
+
 }
 
 function getTitle(v_url) {
@@ -127,9 +138,4 @@ function getTitle(v_url) {
         console.error('NOOOOO');
       }
     });
-}
-
-function test(str_t){
-    var testt = "hello" + str_t;
-    return testt;
 }
