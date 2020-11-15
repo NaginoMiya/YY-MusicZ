@@ -30,22 +30,12 @@
         </div>
 
         <div class="btn-border-gradient-wrap">
-            <input type="button" class="btn btn-border-gradient" value="SEND!" onclick="OnButtonClick();" />
+            <input type="button" class="btn btn-border-gradient" value="SEND!" onclick="SendButtonClick();" />
         </div>
     </div>
 
     <script type="text/javascript" src="js/melody1.js"></script>
 
-    <script>
-        var cnt = 0
-
-        function OnButtonClick() {
-            cnt = cnt + 1;
-            var url = "URL" + cnt;
-            var add = '<div class="list-container"><div class="flex-item list-url col-8">' + url + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×"/></div></div>';
-            $('#wrapper').append(add).trigger('create');
-        };
-    </script>
 
 </body>
 
