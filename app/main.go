@@ -132,7 +132,7 @@ func main() {
 
 
 	//melodyの実装部
-	router.GET("/ws/:genre", func(c *gin.Context) {
+	router.GET("/ws/music/:genre", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
