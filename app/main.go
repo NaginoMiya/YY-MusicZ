@@ -137,49 +137,58 @@ func main() {
 		c.HTML(http.StatusOK, "base", gin.H{})
 	})
 
+
 	//melodyの実装部
+
 	router.GET("/ws", func(c *gin.Context) {
+		//テスト用です、不要になったら消します.
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsjpop", func(c *gin.Context) {
+	router.GET("/ws/jpop", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsrock", func(c *gin.Context) {
+	router.GET("/ws/rock", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsedm", func(c *gin.Context) {
+	router.GET("/ws/edm", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wshiphop", func(c *gin.Context) {
+	router.GET("/ws/hiphop", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsclassic", func(c *gin.Context) {
+	router.GET("/ws/classic", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsgame", func(c *gin.Context) {
+	router.GET("/ws/game", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsvocaloid", func(c *gin.Context) {
+	router.GET("/ws/vocaloid", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsanime", func(c *gin.Context) {
+	router.GET("/ws/anime", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsall", func(c *gin.Context) {
+	router.GET("/ws/all", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
+
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
-		m.Broadcast(msg)
+		m.BroadcastFilter(msg, func(q *melody.Session) bool {
+			//メッセージの確認用です。
+			println(q.Request.URL.Path)
+			println(s.Request.URL.Path)
+			return q.Request.URL.Path == s.Request.URL.Path
+		})
 	})
 
 	router.Run(":8080")
