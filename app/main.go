@@ -139,45 +139,7 @@ func main() {
 
 
 	//melodyの実装部
-
-	router.GET("/ws", func(c *gin.Context) {
-		//テスト用です、不要になったら消します.
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/jpop", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/rock", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/edm", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/hiphop", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/classic", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/game", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/vocaloid", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/anime", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/ws/all", func(c *gin.Context) {
+	router.GET("/ws/:genre", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
