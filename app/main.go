@@ -60,22 +60,15 @@ func main() {
 	m := melody.New()
 
 	router.GET("/", func(c *gin.Context) {
-
 		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/index.tmpl")))
-
-		//こいつは消しても大丈夫です
-		b_messege := "stringだよ"
-
 		c.HTML(http.StatusOK, "base", gin.H{
-			//こんな感じで自由に変えてね
-			"a": "生の埋め込みだよ!",
-			"b": b_messege,
 		})
 	})
 
 	//チャット部分
-	router.GET("/music", func(c *gin.Context) {
 
+	router.GET("/melody", func(c *gin.Context) {
+		//テスト用
 		GetRandomMusic("Jpop")
 
 		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music.tmpl")))
