@@ -60,22 +60,15 @@ func main() {
 	m := melody.New()
 
 	router.GET("/", func(c *gin.Context) {
-
 		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/index.tmpl")))
-
-		//こいつは消しても大丈夫です
-		b_messege := "stringだよ"
-
 		c.HTML(http.StatusOK, "base", gin.H{
-			//こんな感じで自由に変えてね
-			"a": "生の埋め込みだよ!",
-			"b": b_messege,
 		})
 	})
 
 	//チャット部分
-	router.GET("/music", func(c *gin.Context) {
 
+	router.GET("/melody", func(c *gin.Context) {
+		//テスト用
 		GetRandomMusic("Jpop")
 
 		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music.tmpl")))
@@ -137,49 +130,20 @@ func main() {
 		c.HTML(http.StatusOK, "base", gin.H{})
 	})
 
+
 	//melodyの実装部
-	router.GET("/ws", func(c *gin.Context) {
+	router.GET("/ws/:genre", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-	router.GET("/wsjpop", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsrock", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsedm", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wshiphop", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsclassic", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsgame", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsvocaloid", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsanime", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
-
-	router.GET("/wsall", func(c *gin.Context) {
-		m.HandleRequest(c.Writer, c.Request)
-	})
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
-		m.Broadcast(msg)
+		m.BroadcastFilter(msg, func(q *melody.Session) bool {
+			//メッセージの確認用です。
+			println(q.Request.URL.Path)
+			println(s.Request.URL.Path)
+			return q.Request.URL.Path == s.Request.URL.Path
+		})
 	})
 
 	router.Run(":8080")
