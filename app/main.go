@@ -65,17 +65,7 @@ func main() {
 		c.HTML(http.StatusOK, "base", gin.H{
 		})
 	})
-
-	//チャット部分
-
-	router.GET("/melody", func(c *gin.Context) {
-		//テスト用
-		GetRandomMusic("Jpop")
-
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
+	
 
 	router.GET("music/:genre", func(c *gin.Context) {
 
@@ -95,9 +85,6 @@ func main() {
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
 		m.BroadcastFilter(msg, func(q *melody.Session) bool {
-			//メッセージの確認用です。
-			println(q.Request.URL.Path)
-			println(s.Request.URL.Path)
 			return q.Request.URL.Path == s.Request.URL.Path
 		})
 	})
