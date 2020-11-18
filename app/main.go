@@ -42,7 +42,7 @@ func GetRandomMusic(music_ids []string) []string {
 	}
 
 	for i := 0; i < select_songs; i++ {
-		ret = append(ret, music_ids[i])
+		ret = append(ret, music_ids[randn[i]])
 	}
 
 	return ret
@@ -73,17 +73,23 @@ func main() {
 
 		switch MusicGenre {
 		case "jpop":
-			music_ids := []string{"SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k"}
+			music_ids := []string{"SX_ViT4Ra7k", "1krJijKL384", "cMRYfNTlpqo", "9qRCARM_LfE", "YapsFDcGe_s"}
 			selected := GetRandomMusic(music_ids)
 			video_id = selected[0]//後に配列になります.
 		case "rock":
 			video_id = "Xnws-1Oz4kM"
 		case "edm":
-			video_id = "ZNT_DcTl6s0"
+			music_ids := []string{"Ni2PSh0N_58", "YJVmu6yttiw", "3nad7SQhtno", "ALZHF5UqnU4", "r2LpOUwca94"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "hiphop":
-			video_id = "tvTRZJ-4EyI"
+			music_ids := []string{"c0dMiqqve5E", "rmeI_Qk1rrk", "r_0JjYUe5jo", "_dAzUOzWvrk", "tvTRZJ-4EyI"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "classic":
-			video_id = "CO7xcXRkyL4"
+			music_ids := []string{"9n8R3x68yuI", "CJV4l0cnNO4", "irC7b-SwA8g", "3JZiZcXf12o", "3439BgooWmQ"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "game":
 			video_id = "CrkRWzsmu8E"
 		case "vocaloid":
