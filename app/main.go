@@ -66,7 +66,7 @@ func main() {
 	})
 	
 
-	router.GET("music/:genre", func(c *gin.Context) {
+	router.GET("/music/:genre", func(c *gin.Context) {
 
 		MusicGenre := c.Param("genre")
 
