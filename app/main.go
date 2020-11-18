@@ -77,7 +77,9 @@ func main() {
 			selected := GetRandomMusic(music_ids)
 			video_id = selected[0]//後に配列になります.
 		case "rock":
-			video_id = "Xnws-1Oz4kM"
+			music_ids := []string{"O_DLtVuiqhI", "QzmsVn2cHaA", "PCp2iXA1uLE", "PLgYflfgq0M", "5pkBqmX2ymc"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "edm":
 			music_ids := []string{"Ni2PSh0N_58", "YJVmu6yttiw", "3nad7SQhtno", "ALZHF5UqnU4", "r2LpOUwca94"}
 			selected := GetRandomMusic(music_ids)
@@ -91,13 +93,22 @@ func main() {
 			selected := GetRandomMusic(music_ids)
 			video_id = selected[0]
 		case "game":
-			video_id = "CrkRWzsmu8E"
+			music_ids := []string{"7DuUT15c8SE", "KYVNZj9-wZI", "vekg2OXHniU", "eto7Wsv9eqg", "7knlsjItLX8"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "vocaloid":
-			video_id = "KsI_1XelVM8"
+			music_ids := []string{"MUahuOoNZNY", "romqp_SB4tU", "KsI_1XelVM8", "UnIhRpIT7nc", "TdegG12IiFo"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "anime":
-			video_id = "3T3ofoKfEoY"
+			music_ids := []string{"n7VZxg9pxkg", "9liVljr-1cs", "CocEAA4idEU", "3T3ofoKfEoY", "6Sh_ZMXBYG0"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
+
 		case "all":
-			video_id = "VHYdHIfLgks"
+			music_ids := []string{"VHYdHIfLgks", "BKl4gZDWP34", "oJlmclcLD74", "F6KgJox-NmM", "Tq49NR_HzfY"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		}
 
 
