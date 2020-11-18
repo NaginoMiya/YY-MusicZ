@@ -20,10 +20,10 @@ type SendData struct {
 }
 
 
-func GetRandomMusic(genre string) []string {
+func GetRandomMusic(music_ids []string) []string {
 	var ret []string
 	const number_of_songs = 5
-	const select_songs = 3
+	const select_songs = 1
 	rand.Seed(time.Now().Unix())
 
 	var cnt []int
@@ -41,19 +41,8 @@ func GetRandomMusic(genre string) []string {
 		}
 	}
 
-	var Jpop = [...]string{"a", "b", "c", "d", "e"}
-	var Jazz = [...]string{"a", "b", "c", "d", "e"}
-
-	switch genre {
-	case "Jpop":
-		for i := 0; i < select_songs; i++ {
-			ret = append(ret, Jpop[randn[i]])
-		}
-	case "Jazz":
-		for i := 0; i < select_songs; i++ {
-			ret = append(ret, Jazz[randn[i]])
-		}
-	default:
+	for i := 0; i < select_songs; i++ {
+		ret = append(ret, music_ids[randn[i]])
 	}
 
 	return ret
@@ -84,23 +73,42 @@ func main() {
 
 		switch MusicGenre {
 		case "jpop":
-			video_id = "SX_ViT4Ra7k"
+			music_ids := []string{"SX_ViT4Ra7k", "1krJijKL384", "cMRYfNTlpqo", "9qRCARM_LfE", "YapsFDcGe_s"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "rock":
-			video_id = "Xnws-1Oz4kM"
+			music_ids := []string{"O_DLtVuiqhI", "QzmsVn2cHaA", "PCp2iXA1uLE", "PLgYflfgq0M", "5pkBqmX2ymc"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "edm":
-			video_id = "ZNT_DcTl6s0"
+			music_ids := []string{"Ni2PSh0N_58", "YJVmu6yttiw", "3nad7SQhtno", "ALZHF5UqnU4", "r2LpOUwca94"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "hiphop":
-			video_id = "tvTRZJ-4EyI"
+			music_ids := []string{"c0dMiqqve5E", "rmeI_Qk1rrk", "r_0JjYUe5jo", "_dAzUOzWvrk", "tvTRZJ-4EyI"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "classic":
-			video_id = "CO7xcXRkyL4"
+			music_ids := []string{"9n8R3x68yuI", "CJV4l0cnNO4", "irC7b-SwA8g", "3JZiZcXf12o", "3439BgooWmQ"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]
 		case "game":
-			video_id = "CrkRWzsmu8E"
+			music_ids := []string{"7DuUT15c8SE", "KYVNZj9-wZI", "vekg2OXHniU", "eto7Wsv9eqg", "7knlsjItLX8"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "vocaloid":
-			video_id = "KsI_1XelVM8"
+			music_ids := []string{"MUahuOoNZNY", "romqp_SB4tU", "KsI_1XelVM8", "UnIhRpIT7nc", "TdegG12IiFo"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "anime":
-			video_id = "3T3ofoKfEoY"
+			music_ids := []string{"n7VZxg9pxkg", "9liVljr-1cs", "CocEAA4idEU", "3T3ofoKfEoY", "6Sh_ZMXBYG0"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
+
 		case "all":
-			video_id = "VHYdHIfLgks"
+			music_ids := []string{"VHYdHIfLgks", "BKl4gZDWP34", "oJlmclcLD74", "F6KgJox-NmM", "Tq49NR_HzfY"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		}
 
 
