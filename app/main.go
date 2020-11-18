@@ -20,10 +20,10 @@ type SendData struct {
 }
 
 
-func GetRandomMusic(genre string) []string {
+func GetRandomMusic(music_ids []string) []string {
 	var ret []string
 	const number_of_songs = 5
-	const select_songs = 3
+	const select_songs = 1
 	rand.Seed(time.Now().Unix())
 
 	var cnt []int
@@ -41,19 +41,8 @@ func GetRandomMusic(genre string) []string {
 		}
 	}
 
-	var Jpop = [...]string{"a", "b", "c", "d", "e"}
-	var Jazz = [...]string{"a", "b", "c", "d", "e"}
-
-	switch genre {
-	case "Jpop":
-		for i := 0; i < select_songs; i++ {
-			ret = append(ret, Jpop[randn[i]])
-		}
-	case "Jazz":
-		for i := 0; i < select_songs; i++ {
-			ret = append(ret, Jazz[randn[i]])
-		}
-	default:
+	for i := 0; i < select_songs; i++ {
+		ret = append(ret, music_ids[i])
 	}
 
 	return ret
@@ -84,7 +73,9 @@ func main() {
 
 		switch MusicGenre {
 		case "jpop":
-			video_id = "SX_ViT4Ra7k"
+			music_ids := []string{"SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k", "SX_ViT4Ra7k"}
+			selected := GetRandomMusic(music_ids)
+			video_id = selected[0]//後に配列になります.
 		case "rock":
 			video_id = "Xnws-1Oz4kM"
 		case "edm":
