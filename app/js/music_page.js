@@ -7,7 +7,6 @@ var text = document.getElementById("text");
 var queue = [];
 var check = [];
 
-var videoTitle;
 
 var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
@@ -70,13 +69,15 @@ function stopVideo(){
 
 var cnt = 0
 ws.onmessage = function (msg) {
-    var url = msg.data;
+    const obj = JSON.parse(msg.data);
+    var url = obj.url;
+
     cnt++;
     queue.push(url);
     check.push(cnt);
     var n = "url" + cnt;
     setTimeout(()=>{
-        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + videoTitle + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
         $('#wrapper').append(add).trigger('create');
         }, 200);    
 };
@@ -88,8 +89,6 @@ function SendButtonClick() {
         ws.send(url);
 
         text.value = "";
-        getTitle(url);
-
     }
     else {
         swal({
@@ -111,21 +110,4 @@ function remove(obj) {
     var idx = N - parseInt(check[0]);
     check[idx] = -1;
 
-}
-
-function getTitle(v_url) {
-    //var videoId = "Hy8kmNEo1i8";
-    var videoUrl = v_url;
-    var oembedUrl = 'https://noembed.com/embed?url=' + videoUrl;
-    jQuery.ajax({
-        url: oembedUrl,
-        type: 'GET',
-        dataType: 'json',
-        success: function(resp){
-        videoTitle = resp['title'];
-        },
-        error: function(data) {
-        console.error('NOOOOO');
-        }
-    });
 }
