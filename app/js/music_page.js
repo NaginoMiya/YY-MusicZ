@@ -17,10 +17,13 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 function onYouTubeIframeAPIReady() {
+    //data-attrからidを取得
+    const init_id = document.getElementById('init_id');
+    
     player = new YT.Player("player", {
         height: "450",
         width: "800",
-        videoId: "ZNT_DcTl6s0",
+        videoId: init_id.dataset.id,
         events: {
             "onReady": onPlayerReady,
             "onStateChange": onPlayerStateChange
@@ -75,7 +78,7 @@ ws.onmessage = function (msg) {
     setTimeout(()=>{
         var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + videoTitle + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
         $('#wrapper').append(add).trigger('create');
-      }, 200);    
+        }, 200);    
 };
 
 function SendButtonClick() {
@@ -115,14 +118,14 @@ function getTitle(v_url) {
     var videoUrl = v_url;
     var oembedUrl = 'https://noembed.com/embed?url=' + videoUrl;
     jQuery.ajax({
-      url: oembedUrl,
-      type: 'GET',
-      dataType: 'json',
-      success: function(resp){
+        url: oembedUrl,
+        type: 'GET',
+        dataType: 'json',
+        success: function(resp){
         videoTitle = resp['title'];
-      },
-      error: function(data) {
+        },
+        error: function(data) {
         console.error('NOOOOO');
-      }
+        }
     });
 }
