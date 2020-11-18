@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
@@ -64,84 +65,26 @@ func main() {
 		c.HTML(http.StatusOK, "base", gin.H{
 		})
 	})
+	
 
-	//チャット部分
+	router.GET("music/:genre", func(c *gin.Context) {
 
-	router.GET("/melody", func(c *gin.Context) {
-		//テスト用
-		GetRandomMusic("Jpop")
+		MusicGenre := fmt.Sprintf("template/%s.tmpl", c.Param("genre"))
 
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/jpop", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/jpop.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/rock", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/rock.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/edm", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/edm.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/hiphop", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/hiphop.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/classic", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/classic.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/game", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/game.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/vocaloid", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/vocaloid.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/anime", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/anime.tmpl")))
-
-		c.HTML(http.StatusOK, "base", gin.H{})
-	})
-
-	router.GET("/all", func(c *gin.Context) {
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/all.tmpl")))
+		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, MusicGenre)))
 
 		c.HTML(http.StatusOK, "base", gin.H{})
 	})
 
 
 	//melodyの実装部
-	router.GET("/ws/:genre", func(c *gin.Context) {
+	router.GET("/ws/music/:genre", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
 		m.BroadcastFilter(msg, func(q *melody.Session) bool {
-			//メッセージの確認用です。
-			println(q.Request.URL.Path)
-			println(s.Request.URL.Path)
 			return q.Request.URL.Path == s.Request.URL.Path
 		})
 	})
