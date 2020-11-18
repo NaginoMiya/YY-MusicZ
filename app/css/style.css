@@ -182,6 +182,7 @@ body {
 .form-group {
   display: inline-block;
   width: 70%;
+  margin-top: 10px;
 }
 
 /* flex box */
@@ -270,22 +271,14 @@ input.btn-border-gradient {
   text-decoration: none;
   letter-spacing: 0.1em;
   border-radius: 0.5rem;
-  color: #8fc31f;
+  color:  rgb(255, 96, 96);
   background: #111;
 }
 
 
 .btn-border-gradient-wrap {
   display: inline-block;
-  margin-top: 20px;
   margin-left: 30px;
   padding: 0.2rem;
   border-radius: 0.5rem;
-  background: -webkit-linear-gradient(left, deeppink, red);
-  background: linear-gradient(to right, deeppink, red);
-}
-
-.btn-border-gradient-wrap:hover {
-  background: -webkit-linear-gradient(right, deeppink, red);
-  background: linear-gradient(to left, deeppink, red);
 }
