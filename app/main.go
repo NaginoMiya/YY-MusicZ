@@ -81,6 +81,18 @@ func main() {
 			video_id = "Xnws-1Oz4kM"
 		case "edm":
 			video_id = "ZNT_DcTl6s0"
+		case "hiphop":
+			video_id = "tvTRZJ-4EyI"
+		case "classic":
+			video_id = "CO7xcXRkyL4"
+		case "game":
+			video_id = "CrkRWzsmu8E"
+		case "vocaloid":
+			video_id = "KsI_1XelVM8"
+		case "anime":
+			video_id = "3T3ofoKfEoY"
+		case "all":
+			video_id = "VHYdHIfLgks"
 		}
 
 
