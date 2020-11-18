@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
@@ -69,11 +68,26 @@ func main() {
 
 	router.GET("music/:genre", func(c *gin.Context) {
 
-		MusicGenre := fmt.Sprintf("template/%s.tmpl", c.Param("genre"))
+		MusicGenre := c.Param("genre")
 
-		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, MusicGenre)))
+		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music_page.tmpl")))
 
-		c.HTML(http.StatusOK, "base", gin.H{})
+		var video_id string
+
+		switch MusicGenre {
+		case "jpop":
+			video_id = "SX_ViT4Ra7k"
+		case "rock":
+			video_id = "Xnws-1Oz4kM"
+		case "edm":
+			video_id = "ZNT_DcTl6s0"
+		}
+
+
+
+		c.HTML(http.StatusOK, "base", gin.H{
+			"video_id": video_id,
+		})
 	})
 
 
