@@ -1,16 +1,24 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/gin-contrib/static"
+	"github.com/gin-gonic/gin"
+	"gopkg.in/olahol/melody.v1"
 	"html/template"
+	"log"
 	"math/rand"
 	"net/http"
 	"time"
-
-	"github.com/gin-contrib/static"
-	"github.com/gin-gonic/gin"
-
-	"gopkg.in/olahol/melody.v1"
 )
+
+type SendData struct {
+	Title string `json:"title"`
+	Url string   `json:"url"`
+}
+
 
 func GetRandomMusic(genre string) []string {
 	var ret []string
@@ -110,7 +118,25 @@ func main() {
 
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
-		m.BroadcastFilter(msg, func(q *melody.Session) bool {
+		url := string(msg)
+		res, err := http.Get(url)
+		if err != nil {
+			log.Println(err)
+		}
+		defer res.Body.Close()
+
+		send_data := new(SendData)
+		send_data.Url = url
+
+		doc, _ := goquery.NewDocumentFromReader(res.Body)
+		doc.Find("title").Each(func(i int, s *goquery.Selection) {
+			fmt.Println(s.Text())
+			send_data.Title = s.Text()
+		})
+
+		send_data_json, _ := json.Marshal(send_data)
+
+		m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
 			return q.Request.URL.Path == s.Request.URL.Path
 		})
 	})
