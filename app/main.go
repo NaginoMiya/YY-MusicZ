@@ -143,10 +143,13 @@ func main() {
 		})
 
 		send_data_json, _ := json.Marshal(send_data)
-
-		m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
-			return q.Request.URL.Path == s.Request.URL.Path
-		})
+		if(len(send_data.Title) != 0){
+			m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
+				return q.Request.URL.Path == s.Request.URL.Path
+			})
+		}else{
+			s.Write(send_data_json)
+		}
 	})
 
 	router.Run(":8080")
