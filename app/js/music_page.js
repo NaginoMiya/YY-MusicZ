@@ -86,14 +86,23 @@ ws.onmessage = function (msg) {
     const obj = JSON.parse(msg.data);
     var url = obj.url;
 
-    cnt++;
-    queue.push(url);
-    check.push(cnt);
-    var n = "url" + cnt;
-    setTimeout(()=>{
-        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
-        $('#wrapper').append(add).trigger('create');
+    if(obj.title){
+        cnt++;
+        queue.push(url);
+        check.push(cnt);
+        var n = "url" + cnt;
+        setTimeout(()=>{
+            var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+            $('#wrapper').append(add).trigger('create');
         }, 200);    
+    }else{
+        swal({
+            title: "Wrong URL!!",
+            text: "Please try again.",
+            icon: "error",
+            dangerMode: true,
+        });
+    }
 };
 
 function SendButtonClick() {
