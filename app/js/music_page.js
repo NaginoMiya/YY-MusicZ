@@ -32,11 +32,12 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+// 再生準備完了時
 function onPlayerReady(event) {
     event.target.playVideo();
 }
 
-var done = false;
+// 動画の状態変化時
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) PlayNextVideo();
 }
@@ -66,6 +67,7 @@ function PlayNextVideo(){
     player.loadVideoById(videoId)
 }
 
+// エラー発生時
 function onPlayerError(event){
     swal({
         title: "Can't play this video...",
@@ -85,7 +87,7 @@ var cnt = 0
 ws.onmessage = function (msg) {
     const obj = JSON.parse(msg.data);
     var url = obj.url;
-
+    // obj.titleがないときはその動画を弾く
     if(obj.title){
         cnt++;
         queue.push(url);

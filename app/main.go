@@ -143,6 +143,8 @@ func main() {
 		})
 
 		send_data_json, _ := json.Marshal(send_data)
+
+		// send_data.Titleの長さが0の時は無効なURLとする
 		if(len(send_data.Title) != 0){
 			m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
 				return q.Request.URL.Path == s.Request.URL.Path
