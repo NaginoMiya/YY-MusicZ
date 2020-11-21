@@ -24,42 +24,58 @@ function onYouTubeIframeAPIReady() {
         width: "800",
         videoId: init_id.dataset.id,
         events: {
+            // 各イベントについて対応するコールバック関数を用意する
             "onReady": onPlayerReady,
-            "onStateChange": onPlayerStateChange
+            "onStateChange": onPlayerStateChange,
+            "onError": onPlayerError
         }
     });
 }
 
+// 再生準備完了時
 function onPlayerReady(event) {
     event.target.playVideo();
 }
 
-var done = false;
+// 動画の状態変化時
 function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.ENDED) {
+    if (event.data == YT.PlayerState.ENDED) PlayNextVideo();
+}
 
-        //to do: videoIdがfalse -> 再生しないように後で実装する
+// 動画の再生処理の部分
+function PlayNextVideo(){
+    //to do: videoIdがfalse -> 再生しないように後で実装する
         
-        while(check[0] == -1 && check.length > 0){
-            queue.shift();
-            check.shift();
-        }
-        
-        var id_tmp = '#url' + check[0];
-        $(id_tmp).remove();
-        var url = queue.shift();
+    while(check[0] == -1 && check.length > 0){
+        queue.shift();
         check.shift();
-        videoId = url.split('v=')[1];
-
-        if (videoId) {
-            // &=クエリパラーメターがついていることがあるので取り除く
-            const ampersandPosition = videoId.indexOf('&');
-            if(ampersandPosition != -1) {
-                videoId = videoId.substring(0, ampersandPosition);
-            }
-        }
-        player.loadVideoById(videoId)
     }
+    
+    var id_tmp = '#url' + check[0];
+    $(id_tmp).remove();
+    var url = queue.shift();
+    check.shift();
+    videoId = url.split('v=')[1];
+
+    if (videoId) {
+        // &=クエリパラーメターがついていることがあるので取り除く
+        const ampersandPosition = videoId.indexOf('&');
+        if(ampersandPosition != -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+        }
+    }
+    player.loadVideoById(videoId)
+}
+
+// エラー発生時
+function onPlayerError(event){
+    swal({
+        title: "Can't play this video...",
+        text: "We play next video.",
+        icon: "error",
+        dangerMode: true,
+    });
+    PlayNextVideo();
 }
 
 function stopVideo(){
@@ -71,15 +87,24 @@ var cnt = 0
 ws.onmessage = function (msg) {
     const obj = JSON.parse(msg.data);
     var url = obj.url;
-
-    cnt++;
-    queue.push(url);
-    check.push(cnt);
-    var n = "url" + cnt;
-    setTimeout(()=>{
-        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
-        $('#wrapper').append(add).trigger('create');
+    // obj.titleがないときはその動画を弾く
+    if(obj.title){
+        cnt++;
+        queue.push(url);
+        check.push(cnt);
+        var n = "url" + cnt;
+        setTimeout(()=>{
+            var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+            $('#wrapper').append(add).trigger('create');
         }, 200);    
+    }else{
+        swal({
+            title: "Wrong URL!!",
+            text: "Please try again.",
+            icon: "error",
+            dangerMode: true,
+        });
+    }
 };
 
 function SendButtonClick() {
@@ -96,7 +121,7 @@ function SendButtonClick() {
             text: "Please try again.",
             icon: "error",
             dangerMode: true,
-        })
+        });
     }
     text.value = "";
 };
