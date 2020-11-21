@@ -150,6 +150,7 @@ func main() {
 				return q.Request.URL.Path == s.Request.URL.Path
 			})
 		}else{
+			// 自分のみにRedirect
 			s.Write(send_data_json)
 		}
 	})
