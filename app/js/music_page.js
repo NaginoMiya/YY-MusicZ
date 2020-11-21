@@ -19,7 +19,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player("player", {
         height: "450",
         width: "800",
-        videoId: getRandomMusic(),
+        videoId: getRandomMusic(1),
         events: {
             // 各イベントについて対応するコールバック関数を用意する
             "onReady": onPlayerReady,
@@ -41,15 +41,14 @@ function onPlayerStateChange(event) {
 
 // 動画の再生処理の部分
 function PlayNextVideo(){
-
-    //queueが空のとき、補充
-    if(queue.length == 0){
-        getRandomMusic()
-    }
-
     while(check[0] == -1 && check.length > 0){
         queue.shift();
         check.shift();
+    }
+
+    //queueが空のとき、補充
+    if(queue.length == 0){
+        getRandomMusic(0)
     }
 
     var id_tmp = '#url' + check[0];
@@ -113,7 +112,7 @@ function SendButtonClick() {
 };
 
 
-function getRandomMusic(){
+function getRandomMusic(isFirst){
     var result = $.ajax({
         type: 'GET',
         url: '/get_random_music' + window.location.pathname,
@@ -124,7 +123,8 @@ function getRandomMusic(){
     var video_list = obj.video_list
     var title_list = obj.title_list
 
-    for(var i=1; i<video_list.length; i++){
+    //isFirst=1のとき、初期動画
+    for(var i=isFirst; i<video_list.length; i++){
         addVideo("https://www.youtube.com/watch?v=" + video_list[i], title_list[i]);
     }
 
@@ -139,10 +139,8 @@ function  addVideo(url, title) {
         queue.push(url);
         check.push(cnt);
         var n = "url" + cnt;
-        setTimeout(()=>{
-            var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
-            $('#wrapper').append(add).trigger('create');
-        }, 200);
+        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+        $('#wrapper').append(add).trigger('create');
     }else{
         swal({
             title: "Wrong URL!!",
