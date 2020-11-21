@@ -20,10 +20,30 @@ type SendData struct {
 }
 
 
+func GenerateSendData(url string) *SendData {
+	res, err := http.Get(url)
+	if err != nil {
+		log.Println(err)
+	}
+	defer res.Body.Close()
+
+	send_data := new(SendData)
+	send_data.Url = url
+
+	doc, _ := goquery.NewDocumentFromReader(res.Body)
+	doc.Find("title").Each(func(i int, s *goquery.Selection) {
+		fmt.Println(s.Text())
+		send_data.Title = s.Text()
+	})
+
+	return send_data
+}
+
+
 func GetRandomMusic(music_ids []string) []string {
 	var ret []string
 	const number_of_songs = 5
-	const select_songs = 1
+	const select_songs = 3
 	rand.Seed(time.Now().Unix())
 
 	var cnt []int
@@ -61,60 +81,72 @@ func main() {
 		c.HTML(http.StatusOK, "base", gin.H{
 		})
 	})
-	
+
 
 	router.GET("/music/:genre", func(c *gin.Context) {
-
-		MusicGenre := c.Param("genre")
-
 		router.SetHTMLTemplate(template.Must(template.New("main").ParseFiles(layout, "template/music_page.tmpl")))
+		c.HTML(http.StatusOK, "base", gin.H{
+		})
+	})
 
-		var video_id string
+
+	router.GET("/get_random_music/music/:genre", func(c *gin.Context) {
+		MusicGenre := c.Param("genre")
+		fmt.Println(MusicGenre)
+
+		var video_list []string
 
 		switch MusicGenre {
 		case "jpop":
 			music_ids := []string{"SX_ViT4Ra7k", "1krJijKL384", "cMRYfNTlpqo", "9qRCARM_LfE", "YapsFDcGe_s"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
+			video_list = selected
 		case "rock":
 			music_ids := []string{"O_DLtVuiqhI", "QzmsVn2cHaA", "PCp2iXA1uLE", "PLgYflfgq0M", "5pkBqmX2ymc"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
+			video_list = selected
 		case "edm":
 			music_ids := []string{"Ni2PSh0N_58", "YJVmu6yttiw", "3nad7SQhtno", "ALZHF5UqnU4", "r2LpOUwca94"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]
+			video_list = selected
 		case "hiphop":
 			music_ids := []string{"c0dMiqqve5E", "rmeI_Qk1rrk", "r_0JjYUe5jo", "_dAzUOzWvrk", "tvTRZJ-4EyI"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]
+			video_list = selected
 		case "classic":
 			music_ids := []string{"9n8R3x68yuI", "CJV4l0cnNO4", "irC7b-SwA8g", "3JZiZcXf12o", "3439BgooWmQ"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]
+			video_list = selected
 		case "game":
 			music_ids := []string{"7DuUT15c8SE", "KYVNZj9-wZI", "vekg2OXHniU", "eto7Wsv9eqg", "7knlsjItLX8"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
+			video_list = selected
 		case "vocaloid":
 			music_ids := []string{"MUahuOoNZNY", "romqp_SB4tU", "KsI_1XelVM8", "UnIhRpIT7nc", "TdegG12IiFo"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
+			video_list = selected
 		case "anime":
 			music_ids := []string{"n7VZxg9pxkg", "9liVljr-1cs", "CocEAA4idEU", "3T3ofoKfEoY", "6Sh_ZMXBYG0"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
-
+			video_list = selected
 		case "all":
 			music_ids := []string{"VHYdHIfLgks", "BKl4gZDWP34", "oJlmclcLD74", "F6KgJox-NmM", "Tq49NR_HzfY"}
 			selected := GetRandomMusic(music_ids)
-			video_id = selected[0]//後に配列になります.
+			video_list = selected
 		}
 
+		var title_list []string
 
+		for _, vid := range video_list {
+			url := "https://www.youtube.com/watch?v=" + string(vid)
+			Sd := GenerateSendData(url)
+			title_list = append(title_list, Sd.Title)
 
-		c.HTML(http.StatusOK, "base", gin.H{
-			"video_id": video_id,
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"video_list": video_list,
+			"title_list": title_list,
 		})
 	})
 
@@ -127,26 +159,20 @@ func main() {
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
 		url := string(msg)
-		res, err := http.Get(url)
-		if err != nil {
-			log.Println(err)
-		}
-		defer res.Body.Close()
 
-		send_data := new(SendData)
-		send_data.Url = url
-
-		doc, _ := goquery.NewDocumentFromReader(res.Body)
-		doc.Find("title").Each(func(i int, s *goquery.Selection) {
-			fmt.Println(s.Text())
-			send_data.Title = s.Text()
-		})
+		send_data := GenerateSendData(url)
 
 		send_data_json, _ := json.Marshal(send_data)
 
-		m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
-			return q.Request.URL.Path == s.Request.URL.Path
-		})
+		// send_data.Titleの長さが0の時は無効なURLとする
+		if(len(send_data.Title) != 0){
+			m.BroadcastFilter(send_data_json, func(q *melody.Session) bool {
+				return q.Request.URL.Path == s.Request.URL.Path
+			})
+		}else{
+			// 自分のみにRedirect
+			s.Write(send_data_json)
+		}
 	})
 
 	router.Run(":8080")
