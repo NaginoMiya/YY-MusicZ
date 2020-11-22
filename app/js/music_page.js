@@ -16,13 +16,10 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 function onYouTubeIframeAPIReady() {
-    //data-attrからidを取得
-    const init_id = document.getElementById('init_id');
-    
     player = new YT.Player("player", {
         height: "450",
         width: "800",
-        videoId: init_id.dataset.id,
+        videoId: getRandomMusic(1),
         events: {
             // 各イベントについて対応するコールバック関数を用意する
             "onReady": onPlayerReady,
@@ -44,19 +41,21 @@ function onPlayerStateChange(event) {
 
 // 動画の再生処理の部分
 function PlayNextVideo(){
-    //to do: videoIdがfalse -> 再生しないように後で実装する
-        
     while(check[0] == -1 && check.length > 0){
         queue.shift();
         check.shift();
     }
-    
+  
+    //queueが空のとき、補充
+    if(queue.length == 0){
+        getRandomMusic(0)
+    }
+  
     var id_tmp = '#url' + check[0];
     $(id_tmp).remove();
     var url = queue.shift();
     check.shift();
     videoId = url.split('v=')[1];
-
     if (videoId) {
         // &=クエリパラーメターがついていることがあるので取り除く
         const ampersandPosition = videoId.indexOf('&');
@@ -87,24 +86,10 @@ var cnt = 0
 ws.onmessage = function (msg) {
     const obj = JSON.parse(msg.data);
     var url = obj.url;
-    // obj.titleがないときはその動画を弾く
-    if(obj.title){
-        cnt++;
-        queue.push(url);
-        check.push(cnt);
-        var n = "url" + cnt;
-        setTimeout(()=>{
-            var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + obj.title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
-            $('#wrapper').append(add).trigger('create');
-        }, 200);    
-    }else{
-        swal({
-            title: "Wrong URL!!",
-            text: "Please try again.",
-            icon: "error",
-            dangerMode: true,
-        });
-    }
+  
+    var title = obj.title;
+
+    addVideo(url, title);
 };
 
 function SendButtonClick() {
@@ -125,6 +110,46 @@ function SendButtonClick() {
     }
     text.value = "";
 };
+
+
+function getRandomMusic(isFirst){
+    var result = $.ajax({
+        type: 'GET',
+        url: '/get_random_music' + window.location.pathname,
+        async: false
+    }).responseText;
+
+    const obj = JSON.parse(result);
+    var video_list = obj.video_list
+    var title_list = obj.title_list
+
+    //isFirst=1のとき、初期動画
+    for(var i=isFirst; i<video_list.length; i++){
+        addVideo("https://www.youtube.com/watch?v=" + video_list[i], title_list[i]);
+    }
+
+    return video_list[0]
+}
+
+
+function  addVideo(url, title) {
+    // obj.titleがないときはその動画を弾く
+    if(title){
+        cnt++;
+        queue.push(url);
+        check.push(cnt);
+        var n = "url" + cnt;
+        var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
+        $('#wrapper').append(add).trigger('create');
+    }else{
+        swal({
+            title: "Wrong URL!!",
+            text: "Please try again.",
+            icon: "error",
+            dangerMode: true,
+        });
+    }
+}
 
 function remove(obj) {
     var id_name = ($(obj).parent()).parent().attr('id');
