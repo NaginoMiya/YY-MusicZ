@@ -45,17 +45,16 @@ function PlayNextVideo(){
         queue.shift();
         check.shift();
     }
-
+  
     //queueが空のとき、補充
     if(queue.length == 0){
         getRandomMusic(0)
     }
-
+  
     var id_tmp = '#url' + check[0];
     $(id_tmp).remove();
     var url = queue.shift();
     check.shift();
-
     videoId = url.split('v=')[1];
     if (videoId) {
         // &=クエリパラーメターがついていることがあるので取り除く
@@ -87,6 +86,7 @@ var cnt = 0
 ws.onmessage = function (msg) {
     const obj = JSON.parse(msg.data);
     var url = obj.url;
+  
     var title = obj.title;
 
     addVideo(url, title);
