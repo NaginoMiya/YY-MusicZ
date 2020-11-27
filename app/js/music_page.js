@@ -40,8 +40,8 @@ function onPlayerStateChange(event) {
 }
 
 // 動画の再生処理の部分
-function PlayNextVideo(){
-    while(check[0] == -1 && check.length > 0){
+async function PlayNextVideo(){
+    while(check.length > 0 && check[0][1] == -1){
         queue.shift();
         check.shift();
     }
@@ -51,7 +51,7 @@ function PlayNextVideo(){
         getRandomMusic(0)
     }
   
-    var id_tmp = '#url' + check[0];
+    var id_tmp = '#url' + check[0][0];
     $(id_tmp).remove();
     var url = queue.shift();
     check.shift();
@@ -137,7 +137,7 @@ function  addVideo(url, title) {
     if(title){
         cnt++;
         queue.push(url);
-        check.push(cnt);
+        check.push([cnt, 0]);
         var n = "url" + cnt;
         var add = '<div id =' + n + ' class="list-container"><div class="flex-item list-url col-8">' + title + '</div><div class="flex-item col-3"><input class="btn btn-outline-dark btn-del btn-danger" type="button" value="×" onclick="remove(this);"/></div></div>';
         $('#wrapper').append(add).trigger('create');
@@ -157,7 +157,6 @@ function remove(obj) {
     id_name = '#' + id_name;
     $(id_name).remove();
 
-    var idx = N - parseInt(check[0]);
-    check[idx] = -1;
-
+    var idx = N - parseInt(check[0][0]);
+    check[idx][1] = -1;
 }
